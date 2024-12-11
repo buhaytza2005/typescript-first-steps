@@ -1,0 +1,443 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>TypeScript First Steps</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css"
+		integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css"
+		integrity="sha512-ITH3NSfntO7uI5n+BnxGNXpzDUoOsmAXuG37UDONLxNYIdc0EBBOOQ1xyc+t9ag9ETSuBXFApx+Rod0uURfDYw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css"
+		integrity="sha512-bfCyfT+5Js2CKjpiF7yCtTcNlNTtcdAIHV8DfGLCQuTfTEHTU9uEvhQ/Ty4zv3IRtkFQu8DKeM2MHGka+K/cxA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- Theme used for syntax highlighted code -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/night-owl.min.css" integrity="sha512-i5X6Fdn/ZqvGSqPrdMa3FgcpXM/Nr6YccSKFYT93zljl/HZDEpvBbE5Pxp91eiWGccZLrL/LDQJd7fjTRYsVaA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/a11y-dark.min.css"
+		integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<style>
+		/* SLIDES (Reveal.js) */
+		.reveal code {
+			color:
+				var(--r-link-color-hover);
+		}
+
+		.accent {
+			color: var(--r-link-color);
+		}
+	</style>
+	<style>
+		/* ICONS (Iconify) */
+		.mdi--arrow-right-bold {
+			display: inline-block;
+			--svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M4 15V9h8V4.16L19.84 12L12 19.84V15z'/%3E%3C/svg%3E");
+			background-color: currentColor;
+			-webkit-mask-image: var(--svg);
+			mask-image: var(--svg);
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-size: 100% 100%;
+			mask-size: 100% 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+					## TS: Why, What & How
+
+					<div style="display: flex; justify-content: space-evenly; align-items: center;">
+					<a title="Christopher Williams, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:JavaScript-logo.png">
+						<img width="256" alt="JavaScript-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/256px-JavaScript-logo.png?20120221235433"  style="border-radius: 20px;" />
+					</a>
+					<span 
+						class="mdi--arrow-right-bold" 
+						style="width: 128px; height: 128px;">
+					</span>
+					<a title="™/®Microsoft, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Typescript_logo_2020.svg">
+						<img width="256" alt="Typescript logo 2020" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/256px-Typescript_logo_2020.svg.png?20221110153201" />
+					</a>
+					</div>
+
+					--
+					### Goals
+
+					- Understand the problems TypeScript solves
+					- Install & configure TS in a JS codebase
+					- Start using & compiling TS files
+
+				  
+					--
+
+					### Ready?
+
+					# Let's go!
+
+					</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+					## The Errors of our JS Ways
+
+
+					--
+
+					### Ever run into errors like this?
+					
+					```js
+					"Cannot read 'property' of undefined"
+
+					"Cannot set properties of null"
+
+					"'undefined' is not a function"
+
+					```
+
+
+					--
+
+					### Or things that shouldn't work, but do?
+
+					```js
+					document.titel = "My Web Page"
+					// "My Web Page" 
+					
+					document.body = 'oopsie';
+					// undefined
+
+					document.body
+					// null 
+
+					```
+
+					--
+
+
+					### Or unexpected results?
+
+					<a href="https://bobbyhadz.com/blog/javascript-alert-display-variable" title="From bobbyhadz.com" >
+
+					<img src="https://bobbyhadz.com/images/blog/javascript-alert-display-variable/display-object-without-json-stringify.webp" width="600" />
+
+					</a>
+
+					--
+
+					### Or just complete nonsense?
+
+					<a href="https://www.destroyallsoftware.com/talks/wat" title="Wat: A lightning talk by Gary Bernhardt from CodeMash 2012" target="_blank" >
+				
+					<img src="https://i.kym-cdn.com/photos/images/newsfeed/000/173/580/Wat.jpg" title='"wat" meme of a person on a boat wearing a horse mask holding a cat' />
+
+					<small>"Wat" talk by Gary Bernhardt @ CodeMash 2012</small>
+
+					</a>
+
+
+					--
+
+					What if we could catch problems like this <span class="accent">before</span> our users do?
+
+					What if we could even <span class="accent">avoid writing</span> code that won't run in the first place?
+
+					</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+				<h2>A new <span class="accent">Type</span> of Script</h2>
+
+				<a title="™/®Microsoft, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Typescript_logo_2020.svg">
+					<img width="256" alt="Typescript logo 2020" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/256px-Typescript_logo_2020.svg.png?20221110153201" />
+				</a>
+
+				<!-- --
+
+				<a href="https://typescriptlang.org" target="_blank" >
+
+				<img alt="typescriptlang.org" src="https://github.com/user-attachments/assets/8a923cf6-3698-48b7-9162-3cc06cd84a59" />
+
+				</a> -->
+
+				--
+				
+				<h3>
+					<a href="https://www.typescriptlang.org/docs/" target="_blank" title="TS Docs" >
+						typescriptlang.org/docs
+					</a>
+				</h3>
+				<h3>
+				<a href="https://www.typescriptlang.org/play/?#code/PTAEBUE8AcFMGUDGAnAltALqayD2A3VAE1gGdQBHAV1UQGsBaAM1QA9RlZFcBbH2AHZEAhhlS4B5JrmQAoEKG58JoYYkTFBGUgDpQABTw9M5UgAtcAd1BVooVANCRcVZKFhFUGGaABGw0g95MBUMMzJYDi5efiFRcUkdWWDQADEfWFZhYwAbSKg4JDRMRWFHHAJNShp6ZjYyFOk3DBhccgcnF2aYMgAuZO5JLFgqPORSADkqHl9YNwBeUAAmHQB2AEYADiXNrZ2AFgBuWRGxyenZ5B1veAxkMoBzAAoASmOFUE+v74A9AH0AYCfqAGKBAnlEFgwqhyN4wbBImFIjlUA8zFhfKNfAMcgFyABRLK5WAAYVxpHIAG9ZJ9+GFcERXqBqd9oboBLgMAARLi4zhEUCLdYABmOnwAvrJJUA" title="TS playground" target="_blank">
+					typescriptlang.org/play
+				</a>
+				</h3>
+
+				</textarea>
+			</section>
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+				### Course Project:
+				
+				
+				<h2 class='accent'><a>event me!</a></h2>
+				
+				<a href="https://github.com/vakila/event-me-js" target="_blank">
+
+				[github.com/vakila/event-me](https://github.com/vakila/event-me)
+
+				</a>
+
+				--
+
+				This JS codebase has some bugs!
+
+				Let's try to find & fix them with TS!
+
+
+				--
+
+				### Setting up
+
+				- Install VSCode IDE: [code.visualstudio.com](https://code.visualstudio.com/)
+				- Clone/download the project repo: <br>
+					[github.com/vakila/event-me](https://github.com/vakila/event-me)
+				- Open the project in VSCode
+
+				```sh
+				git clone git@github.com:vakila/event-me.git
+				cd event-me
+				code .
+				```
+				
+				--
+
+				### Install dependencies
+
+				```bash
+				npm install
+				```
+
+				### Run the dev server
+
+
+				```bash
+				npm run dev
+				```
+
+				### Open [localhost:5173](http://localhost:5173)
+
+				</textarea>
+			</section>
+
+
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+				### Time to TypeScript!
+
+				```sh
+				npm install --save-dev typescript
+				npm i -D typescript
+				```
+
+				```sh
+				npx tsc --init
+				```
+				
+				--
+
+				<h2> 
+				<a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html" target="_blank" title="tsconfig docs">
+				
+				`tsconfig.json`
+
+				</a>
+				</h2>
+
+				--
+
+				![Gif of man looking at woman's computer and asking "Is that some sort of code?"](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExazQ5M2V4MzFiM2F0aHQxcWprM2pjOXZ2Zmg5dWwzZ2YyMXZkejdjNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SSM6HdOicCahnOZ5hM/giphy.webp)
+
+				--
+				
+				
+				```json 
+				{
+					"compilerOptions": {
+					  /* Visit https://aka.ms/tsconfig 
+					  to read more about this file */
+					}
+				}
+				```
+
+				--
+
+				```json
+				/* Modules */
+				"module": "ESNext",
+				"rootDir": "./",                                  
+				"moduleResolution": "bundler", 
+				"baseUrl": "./",
+				"paths": {
+					"@*": [
+						"src/*"
+					],
+				},
+				```
+
+				--
+
+				```json
+				/* JavaScript Support */
+				"allowJs": true, 
+				"checkJs": true, 
+
+				/* Output options */
+				"noEmit": true,
+				```
+
+				--
+
+				```sh
+				npx tsc
+				```
+
+				```json
+				"scripts": [
+					"check": "tsc"
+				]
+				```
+
+				--
+
+				![Simpsons gif "I won't be needing this [green pen, only red]"](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDU5ajh5bGF4YXZ0YmRqZXF0amFhNzlueHF6ZWg4Mmw5dm0yeHl4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6Mb65G4Xjv5j0VGw/giphy.webp)
+
+				--
+
+				### We need moar types!
+
+				[Vite](https://vitejs.dev) app uses [Node](https://nodejs.org) to build the site
+
+
+				```json
+				"types": [
+					"vite/client"
+				],
+				```
+
+
+				```sh
+				npm i -D @types/node 
+				```
+
+				--
+
+				Now let's go bug hunting!
+
+				![Gif of a bug flying and being caught by a hand](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHk5NmdzMDg1bDR5NHdtNnc2eHFqdHJyaWp1b3Y3eHZ0MW04Y2R1cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/I3uGzDeKjm7J21MoRN/giphy.webp)
+
+
+				</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+				## Better [JS]() with [TS]()
+
+				[docs/handbook/intro-to-js-ts](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html)
+
+				--
+
+				### Hover away!
+
+				![Gif of kids hoverboarding from Back to the Future II](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTgwZmo5bjR5aDY5bDZoYnh2eW9iOXRmdGhmMHQ2N2QxczBpaDQ5OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8c8ogRHmA6STdWC4kM/giphy.webp)
+
+				--
+
+				## `src/Header.js`
+
+
+				--
+
+
+				## `src/Modal.js`
+
+				--
+				
+
+				### From JS to TS 
+
+				~~`Modal.js`~~  <span class="mdi--arrow-right-bold" style="width: 1em; height: 1em;"></span>  `Modal.ts`
+
+
+				--
+
+				### Ready?
+
+				## [Let's dive in!](./2.html)
+				
+
+				</textarea>
+			</section>
+
+
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"
+		integrity="sha512-131e3mIrDAyUD075SVzvIjS0g97uDg0+/qAobDHd++h+lgFi4z88DVOpidm06jpb+0PzK4kcm9w79r6EHV0SkA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"
+		integrity="sha512-nLsCkPS/rdxRVOkxiKnld9KhQ24V/5kRChzSZ3MoFODykbWyBlQRsHLrbpN3J4LabYBnXIp1EnRIo3ifvyiQIg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"
+		integrity="sha512-QAU7Ux8iEB53koLKFCtddfFp0D1+uQWoX3ROnRDLeiE98XHOkMciaup0Spc014jQAuJaqz8VjUZdBqriheI4Lg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"
+		integrity="sha512-U3fPDUX5bMrn1wnYqjaK44MFA9E6MKS+zPAg9WPAGF5XhReBeDj3FGaA831CjueG+YJxYA3WaO/m33kMIoOs/A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<!-- CopyCode plugin for copy button on code samples -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/reveal.js-copycode@1.0.4/plugin/copycode/copycode.js"></script>
+
+	<script>
+		// Slides powered by revealjs.com
+
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
+		});
+
+	</script>
+
+</body>
+
+</html>
