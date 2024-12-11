@@ -12,15 +12,18 @@ const scrollbarWidthCssVar = "--pico-scrollbar-width";
 
 
 // Toggle modal
-export const toggleModal = (click) => {
+export const toggleModal = (click: MouseEvent) => {
     click.preventDefault();
-    const modal = document.getElementById(click.currentTarget.dataset.target);
+    const target = (click.currentTarget as HTMLDialogElement).dataset.target;
+    if (!target) return;
+
+    const modal = document.getElementById(target) as HTMLDialogElement;
     if (!modal) return;
     modal && (modal.open ? closeModal(modal) : openModal(modal));
 };
 
 // Open modal
-const openModal = (modal) => {
+const openModal = (modal: HTMLDialogElement) => {
     const { documentElement: html } = document;
     const scrollbarWidth = getScrollbarWidth();
     if (scrollbarWidth) {
@@ -32,10 +35,10 @@ const openModal = (modal) => {
 };
 
 // Close modal
-const closeModal = (modal) => {
+const closeModal = (modal: HTMLDialogElement) => {
     const { documentElement: html } = document;
     html.classList.remove(isOpenClass);
-    html.dataset.modal = null;
+    html.dataset.modal = undefined;
     modal.close();
     html.style.removeProperty(scrollbarWidthCssVar);
 
@@ -52,7 +55,7 @@ const getScrollbarWidth = () => {
 
 export const setupModals = () => {
     // Add open/close button handlers
-    const togglers = document.querySelectorAll('.toggle-modal');
+    const togglers = document.querySelectorAll<HTMLButtonElement>('.toggle-modal');
     for (let el of togglers) {
         el.addEventListener("click", toggleModal);
     }

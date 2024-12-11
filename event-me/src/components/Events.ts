@@ -17,8 +17,8 @@ const loadEventsData = async () => {
 }
 
 
-export const EventModal = (event) => {
-  const formId = `rsvp-form-${event.ID}`;
+export const EventModal = (event: HTMLDialogElement) => {
+  const formId = `rsvp-form-${event.id}`;
   const modalId = `modal-event-${event.id}`
   return `<dialog id="${modalId}">
       <article>

@@ -1,17 +1,17 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const setupForm = (form) => {
+export const setupForm = (form: HTMLFormElement) => {
     if (!form) return;
 
     const eventId = form.id.replace('rsvp-form-', '');
     const url = `${API_URL}/events/${eventId}/rsvp`;
-    const btn = document.getElementById(`submit-${form.id}`);
+    const btn = document.getElementById(`submit-${form.id}`) as HTMLButtonElement;
 
-    async function sendData(form) {
+    async function sendData(form: HTMLFormElement) {
         const formData = new FormData(form);
         const encoded = new URLSearchParams();
-        for (let [key, value] of formData.entries) {
-            encoded.append(key, value);
+        for (let [key, value] of formData.entries()) {
+            encoded.append(key as string, value as string);
         }
         try {
             const response = await fetch(url, {
@@ -49,7 +49,7 @@ export const setupForm = (form) => {
         const inputs = form.querySelectorAll('input.rsvp-email');
         for (let input of inputs) {
             input.addEventListener('input', () => {
-                if (!btn.textContent.startsWith('Submit')) {
+                if (!btn.textContent?.startsWith('Submit')) {
                     btn.removeAttribute('disabled');
                     btn.textContent = 'Submit RSVP';
                 }
