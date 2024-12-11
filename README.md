@@ -2,6 +2,18 @@
 
 Jump-start your TypeScript journey with this friendly, practical intro from Anjana Vakil.
 
+### Links
+
+- Course materials: [anjana.dev/typescript-first-steps](https://anjana.dev/typescript-first-steps)
+- Repo: [github.com/vakila/typescript-first-steps/event-me](https://github.com/vakila/typescript-first-steps/event-me)
+- [Course Project (JS Frontend): `/event-me`](https://github.com/vakila/typescript-first-steps/event-me) (`main` branch)
+
+### Slides
+
+1. [TS: Why & How](./0.html)
+2. [Using TS for JS](./1.html)
+3. [Language Features & Functionality](./2.html)
+
 ## Overview
   This course will equip you with the key concepts & skills you’ll need to become proficient with the TypeScript language, and acquaint you with the production-grade tooling, workflows, and resources you’ll want to accelerate your productivity and career growth.
 
